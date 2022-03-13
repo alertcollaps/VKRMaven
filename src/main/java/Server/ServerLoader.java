@@ -39,7 +39,9 @@ public class ServerLoader {
 
     private static void start(){
         try {
+            System.out.println(Integer.parseInt(System.getenv().get("PORT")));
             server = new ServerSocket(Integer.parseInt(System.getenv().get("PORT")));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
