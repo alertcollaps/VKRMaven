@@ -11,6 +11,7 @@ import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ServerLoader {
     private static ServerSocket server;
@@ -20,6 +21,8 @@ public class ServerLoader {
 
     public static void main(String[] args) {
         start();
+        Logger log = Logger.getLogger(ServerLoader.class.getName());
+        log.info("started");
         handle();
         end();
     }

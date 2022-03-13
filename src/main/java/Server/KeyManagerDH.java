@@ -136,6 +136,7 @@ public class KeyManagerDH {
         }
         kg.init(new SecureRandom());
         Key key = kg.generateKey();
+        String sss = KeyManagerDH.KeyToString(key);
         return key;
     }
     public static String encryptGost(String data, Key sessionKey){
