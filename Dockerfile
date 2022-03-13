@@ -18,4 +18,3 @@ EXPOSE 8888
 CMD ["ls"]
 CMD ["java", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
 
-RUN: docker build --tag java-server .
