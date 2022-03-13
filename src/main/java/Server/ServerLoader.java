@@ -23,6 +23,7 @@ public class ServerLoader {
         start();
         Logger log = Logger.getLogger(ServerLoader.class.getName());
         log.info("started");
+        System.out.println("Start");
         handle();
         end();
     }
