@@ -3,8 +3,6 @@
 FROM openjdk:17-alpine
 
 
-WORKDIR /app
-
 COPY target/VKRMaven-1.0-SNAPSHOT-jar-with-dependencies.jar ./vkrmaven.jar
 
 ENV PORT 5000
