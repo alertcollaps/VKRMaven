@@ -9,5 +9,5 @@ ENV PORT 5000
 
 EXPOSE $PORT
 
-CMD ["java", "-Dserver.port=${PORT}", "-jar", "./vkrmaven.jar"]
+CMD ["java", "-Dserver.port=${PORT}", "-jar", "./vkrmaven.jar", "Server.ServerLoader"]
 
