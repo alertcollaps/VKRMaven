@@ -31,12 +31,12 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-      - name: ls1
-        run: ls
       - name: download
         uses: actions/download-artifact@v2
         with:
           name: vkrmaven
+      - name: ls1
+        run: ls
       - name: Login to Heroku Container registry
         uses: docker/login-action@v1
         with:
