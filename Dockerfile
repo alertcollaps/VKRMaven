@@ -12,9 +12,9 @@ COPY src ./src
 
 RUN mvn package
 
+ENV PORT 5000
 
-EXPOSE 8888
+EXPOSE $PORT
 
-CMD ["ls"]
-CMD ["java", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
+CMD ["java", "-Dserver.port=${PORT}", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
 
