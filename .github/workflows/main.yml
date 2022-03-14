@@ -22,7 +22,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: vkrmaven
-        path: /*.jar
+        path: target/*.jar
         retention-days: 5
 
   heroku-deploy:
