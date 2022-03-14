@@ -32,7 +32,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
       - name: ls1
-        run: ls
+        run: ls target
       - name: download
         uses: actions/download-artifact@v2
         with:
