@@ -40,7 +40,7 @@ public class ServerLoader {
     private static void start(){
         try {
             //System.out.println(Integer.parseInt(System.getenv("PORT")));
-            server = new ServerSocket(8888);
+            server = new ServerSocket(Integer.parseInt(System.getenv("PORT")));
 
         } catch (IOException e) {
             e.printStackTrace();
