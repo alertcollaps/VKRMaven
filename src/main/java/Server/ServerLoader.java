@@ -30,7 +30,7 @@ public class ServerLoader {
     private static void handle(){
         handler = new ServerHandler(server);
         handler.start();
-        readChat();
+        //readChat();
     }
 
     public static ServerHandler getServerHandler(){
