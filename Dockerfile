@@ -16,5 +16,5 @@ RUN mvn package
 EXPOSE 8888
 
 CMD ["ls"]
-CMD ["java", "$JAVA_OPTS", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
+CMD ["java", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
 
