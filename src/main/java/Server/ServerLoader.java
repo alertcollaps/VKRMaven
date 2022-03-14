@@ -25,7 +25,6 @@ public class ServerLoader {
         log.info("started");
         System.out.println("Start");
         handle();
-        end();
     }
     private static void handle(){
         handler = new ServerHandler(server);
