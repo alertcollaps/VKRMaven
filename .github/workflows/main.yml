@@ -22,7 +22,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: vkrmaven
-        path: target/*.jar
+        path: target/
         retention-days: 5
 
   heroku-deploy:
@@ -31,6 +31,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
+      - name: ls1
+        run: ls /target
       - name: download
         uses: actions/download-artifact@v2
         with:
