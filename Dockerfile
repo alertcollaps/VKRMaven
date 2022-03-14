@@ -2,7 +2,6 @@
 
 FROM openjdk:16-alpine3.13
 
-FROM maven
 
 WORKDIR /app
 
@@ -10,11 +9,9 @@ COPY pom.xml ./
 
 COPY src ./src
 
-RUN mvn package
-
 ENV PORT 5000
 
 EXPOSE $PORT
 
-CMD ["java", "-Dserver.port=${PORT}", "-cp", "target/classes:target/dependency/*", "Server.ServerLoader"]
+CMD ["java", "-Dserver.port=${PORT}", "-jar", "target/VKRMaven-1.0-SNAPSHOT.jar"]
 
