@@ -3,8 +3,10 @@ package Server;
 import Server.packet.OPacket;
 import Server.packet.PacketManager;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class ClientHundler extends Thread {
@@ -51,14 +53,21 @@ public class ClientHundler extends Thread {
     private boolean readData(){
         try{
             DataInputStream dis = new DataInputStream(client.getInputStream());
-            if (dis.available() <= 0){
-                 return false;
+            BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+            while(true) {
+                String s = br.readLine();
+                System.out.println(s);
+                if(s == null || s.trim().length() == 0) {
+                    break;
+                }
             }
+            /*
             short id = dis.readShort();
             OPacket packet = PacketManager.getPacket(id);
             packet.setSocket(client);
             packet.read(dis);
             packet.handle();
+            */
 
         }catch (IOException e){
             e.printStackTrace();
