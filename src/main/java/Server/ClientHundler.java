@@ -58,7 +58,7 @@ public class ClientHundler extends Thread {
                 String s = br.readLine();
                 System.out.println(s);
                 if(s == null || s.trim().length() == 0) {
-                    break;
+                    sleep();
                 }
             }
             /*
