@@ -56,10 +56,11 @@ public class ClientHundler extends Thread {
             BufferedReader br = new BufferedReader(new InputStreamReader(dis));
             while(true) {
                 String s = br.readLine();
-                System.out.println(s);
                 if(s == null || s.trim().length() == 0) {
-                    sleep();
+                    sleep();sleep();sleep();sleep();sleep();sleep();sleep();sleep();sleep();sleep();sleep();sleep();
+                    continue;
                 }
+                System.out.println(s);
             }
             /*
             short id = dis.readShort();
