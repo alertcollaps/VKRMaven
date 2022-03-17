@@ -2,9 +2,11 @@ package Server;
 
 
 import Server.packet.OPacket;
+import com.sun.net.httpserver.HttpServer;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.Key;
@@ -20,11 +22,23 @@ public class ServerLoader {
     private static Key key = KeyManagerDH.getSessionKeyAll();
 
     public static void main(String[] args) {
+        try {
+            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
+            server.createContext("/", new HandlerHttp());
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
         start();
         Logger log = Logger.getLogger(ServerLoader.class.getName());
         log.info("started");
         System.out.println("Start");
         handle();
+         */
+
+
     }
     private static void handle(){
         handler = new ServerHandler(server);
