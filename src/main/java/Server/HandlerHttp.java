@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class HandlerHttp implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        System.out.println("handle start");
         switch (exchange.getHttpContext().getPath()){
             case "/":
                 handleRoot(exchange);
