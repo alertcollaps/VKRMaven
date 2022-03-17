@@ -14,7 +14,11 @@
             <artifactId>bcprov-jdk15on</artifactId>
             <version>1.60</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180130</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
