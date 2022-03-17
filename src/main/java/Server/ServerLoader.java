@@ -23,7 +23,7 @@ public class ServerLoader {
 
     public static void main(String[] args) {
         try {
-            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", 8001), 0);
+            HttpServer server = HttpServer.create(new InetSocketAddress("localhost", Integer.parseInt(System.getenv("PORT"))), 0);
             server.createContext("/", new HandlerHttp());
             server.start();
         } catch (IOException e) {
@@ -36,7 +36,7 @@ public class ServerLoader {
         log.info("started");
         System.out.println("Start");
         handle();
-         */
+        */
 
 
     }
