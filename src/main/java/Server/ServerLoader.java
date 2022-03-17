@@ -23,9 +23,13 @@ public class ServerLoader {
 
     public static void main(String[] args) {
         try {
+
+            System.out.println(Integer.parseInt(System.getenv("PORT")));
             HttpServer server = HttpServer.create(new InetSocketAddress("localhost", Integer.parseInt(System.getenv("PORT"))), 0);
             server.createContext("/", new HandlerHttp());
+            System.out.println("Server started");
             server.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
