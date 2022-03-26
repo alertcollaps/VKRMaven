@@ -49,7 +49,7 @@ public class ServerLoader {
         handler.start();
         //readChat();
     }
-
+//
     public static ServerHandler getServerHandler(){
         return handler;
     }
