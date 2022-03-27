@@ -5,7 +5,7 @@ FROM openjdk:17-alpine
 
 COPY ./VKRMaven-1.0-SNAPSHOT-jar-with-dependencies.jar ./vkrmaven.jar
 
-ENV PORT 5000
+ENV PORT 8888
 
 EXPOSE $PORT
 #
