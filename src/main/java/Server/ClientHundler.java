@@ -35,21 +35,14 @@ public class ClientHundler extends Thread {
     public void run() {
         while(true){
 
-
-
-            try {
-                DataOutputStream dos = new DataOutputStream(client.getOutputStream());
-                PacketOK pk = new PacketOK();
-                dos.writeShort(pk.getId());
-
-                if (!readData()){
-                    sleep();
-                }
-            } catch (IOException e) {
-                System.out.println(e);
-                System.out.println("Client disconnected");
-                ServerLoader.handlers.remove(client);
+            if (client.isClosed()){
+                System.out.println("Client disconnected" + client);
                 return;
+            }
+
+
+            if (!readData()){
+                sleep();
             }
 
 
@@ -63,17 +56,26 @@ public class ClientHundler extends Thread {
             e.printStackTrace();
         }
     }
-    private boolean readData() throws IOException{
+    private boolean readData(){
+        try{
+            DataInputStream dis = new DataInputStream(client.getInputStream());
 
-        DataInputStream dis = new DataInputStream(client.getInputStream());
-        if (dis.available() <= 0){
-            return false;
+            if (dis.available() <= 0){
+                return false;
+            }
+
+            short id = dis.readShort();
+            OPacket packet = PacketManager.getPacket(id);
+            packet.setSocket(client);
+            packet.read(dis);
+            packet.handle();
+        }catch (IOException | NullPointerException e){
+            System.out.println("client " + client);
+            e.printStackTrace();
         }
-        short id = dis.readShort();
-        OPacket packet = PacketManager.getPacket(id);
-        packet.setSocket(client);
-        packet.read(dis);
-        packet.handle();
+
+
+
 
         /*
         short id = dis.readShort();

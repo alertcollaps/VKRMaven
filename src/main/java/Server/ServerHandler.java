@@ -22,8 +22,6 @@ public class ServerHandler extends Thread{
                 client = server.accept();
                 System.out.println("request" + client);
                 clientHandle(client);
-            } catch (SocketException ex){
-                return;
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package Server.packet;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,8 @@ public class PacketManager {
     public static OPacket getPacket(short id){
         try {
             return packets.get(id).getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | InvocationTargetException| NoSuchMethodException | IllegalAccessException e) {
+        } catch (NullPointerException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            System.out.println(id);
             e.printStackTrace();
         }
         return null;

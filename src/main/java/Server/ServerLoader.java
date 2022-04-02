@@ -7,16 +7,18 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class ServerLoader {
     private static ServerSocket server;
     private static ServerHandler handler;
-    public static Map<Socket, ClientHundler> handlers = new HashMap<>();
+    public static ConcurrentHashMap<Socket, ClientHundler> handlers = new ConcurrentHashMap <>();
     private static Key key = KeyManagerDH.getSessionKeyAll();
 
     public static void main(String[] args) {
@@ -86,6 +88,15 @@ public class ServerLoader {
             packet.write(dos);
             dos.flush();
         } catch (IOException e) {
+            if (e.getClass() == SocketException.class){
+                try {
+                    receiver.close();
+                    ServerLoader.handlers.remove(receiver);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
             e.printStackTrace();
         }
     }
