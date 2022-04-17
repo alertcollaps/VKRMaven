@@ -32,7 +32,6 @@ public class PacketMessage extends OPacket {
     @Override
     public void write(DataOutputStream dos) throws IOException {
         sender = ServerLoader.getHandler(getSocket()).getNickname();
-        sender = KeyManagerDH.encryptGost(sender, ServerLoader.getKey());
         dos.writeUTF(sender);
         dos.writeUTF(message);
     }
@@ -44,7 +43,7 @@ public class PacketMessage extends OPacket {
 
     @Override
     public void handle() {
-
+        MessageArray.addMessage(ServerLoader.getHandler(getSocket()).getNickname() + ";" + message);
         ServerLoader.handlers.keySet().forEach(s -> ServerLoader.sendPacket(s, this));
     }
 

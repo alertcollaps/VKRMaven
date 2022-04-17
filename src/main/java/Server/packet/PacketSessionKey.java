@@ -5,10 +5,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class PacketSessionKey extends OPacket{
-    private String sessionKey;
+    private String sessionKey, error;
 
-    PacketSessionKey(String key){
+    PacketSessionKey(){
+
+    }
+
+    PacketSessionKey(String key, String error){
         sessionKey = key;
+        this.error = error;
     }
 
     @Override
@@ -19,11 +24,13 @@ public class PacketSessionKey extends OPacket{
     @Override
     public void write(DataOutputStream dos) throws IOException {
         dos.writeUTF(sessionKey);
+        dos.writeUTF(error);
     }
 
     @Override
     public void read(DataInputStream dis) throws IOException {
         sessionKey = dis.readUTF();
+        error = dis.readUTF();
     }
 
     @Override

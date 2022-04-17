@@ -12,7 +12,7 @@ import java.security.Key;
 import java.util.Base64;
 
 public class PacketAuthorize extends OPacket {
-    private String nickname;
+    private String nickname, email, password;
 
     public PacketAuthorize(){
 
@@ -35,17 +35,54 @@ public class PacketAuthorize extends OPacket {
     @Override
     public void read(DataInputStream dis) throws IOException {
         nickname = dis.readUTF();
+        email = dis.readUTF();
+        password = dis.readUTF();
+
         String keyStr = ServerLoader.getHandler(getSocket()).getSessionKey();
-        nickname = KeyManagerDH.decryptGost(nickname, KeyManagerDH.StringToKey(keyStr));
+        Key key = KeyManagerDH.StringToKey(keyStr);
+
+        nickname = KeyManagerDH.decryptGost(nickname, key);
+        email = KeyManagerDH.decryptGost(email, key);
+        password = KeyManagerDH.decryptGost(password, key);
+
+
         System.out.println("Nickname " + nickname);
+
     }
 
     @Override
     public void handle(){
-        ServerLoader.getHandler(getSocket()).setNickname(nickname);
+        String error = "";
+        String keyAll = "";
         String key = ServerLoader.getHandler(getSocket()).getSessionKey();
-        String keyAll = KeyManagerDH.encryptGost(KeyManagerDH.KeyToString(ServerLoader.getKey()), KeyManagerDH.StringToKey(key));
-        System.out.println("SessionAll:" + KeyManagerDH.KeyToString(ServerLoader.getKey()));
-        ServerLoader.sendPacket(getSocket(), new PacketSessionKey(keyAll));
+        int checkUs = ServerLoader.checkUser(email, password);
+        switch (checkUs){
+            case 0:
+                ServerLoader.addUser(email, password, nickname);
+                error = "NONE";
+
+                nickname = KeyManagerDH.encryptGost(nickname, ServerLoader.getKey());;
+                ServerLoader.getHandler(getSocket()).setNickname(nickname);
+
+                keyAll = KeyManagerDH.encryptGost(KeyManagerDH.KeyToString(ServerLoader.getKey()), KeyManagerDH.StringToKey(key));
+                System.out.println("SessionAll:" + KeyManagerDH.KeyToString(ServerLoader.getKey()));
+                break;
+            case 1:
+                keyAll = "";
+                error = "Invalid password";
+                break;
+            case 2:
+                error = "NONE";
+                nickname = KeyManagerDH.encryptGost(nickname, ServerLoader.getKey());;
+                ServerLoader.getHandler(getSocket()).setNickname(nickname);
+
+                keyAll = KeyManagerDH.encryptGost(KeyManagerDH.KeyToString(ServerLoader.getKey()), KeyManagerDH.StringToKey(key));
+                System.out.println("SessionAll:" + KeyManagerDH.KeyToString(ServerLoader.getKey()));
+                break;
+            default:
+
+        }
+
+        ServerLoader.sendPacket(getSocket(), new PacketSessionKey(keyAll, error));
     }
 }
