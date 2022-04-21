@@ -135,14 +135,20 @@ public class ServerLoader {
 
             Statement stmt = conn.createStatement();
 
-            String sql = "DROP TABLE IF EXISTS COMPANY";
-            stmt.executeUpdate(sql);
-            System.out.println("Таблица пуста");
 
-            sql = "CREATE TABLE COMPANY " +
+
+            String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
                     "(EMAIL TEXT PRIMARY KEY     NOT NULL," +
                     " PASSWORD           TEXT    NOT NULL, " +
                     " NAME            TEXT     NOT NULL)";
+            try {
+                stmt.executeUpdate(sql);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+            sql = "CREATE TABLE IF NOT EXISTS MESSAGES " +
+                    "(MESSAGE TEXT)";
             try {
                 stmt.executeUpdate(sql);
             } catch (SQLException e) {
@@ -204,8 +210,7 @@ public class ServerLoader {
             Statement stmt = conn.createStatement();
 
 
-
-             String sql = "SELECT EXISTS(" +
+            String sql = "SELECT EXISTS(" +
                     "SELECT *" +
                     "FROM COMPANY " +
                     String.format("WHERE EMAIL='%s'", email) +
